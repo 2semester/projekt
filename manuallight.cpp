@@ -60,3 +60,7 @@ void ManualLight::ok(){
 void ManualLight::fail(){
     this->close();
 }
+
+void ManualLight::giveptr(enheder *enhederptr){
+
+}

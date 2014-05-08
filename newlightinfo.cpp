@@ -7,6 +7,9 @@ newlightinfo::newlightinfo(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->TypeBox->addItem(tr("Light"));
+    for(int i = 0; i<14; i++){
+        ui->RoomBox->addItem(QString::number(i+1));
+    }
 }
 
 newlightinfo::~newlightinfo()
@@ -20,7 +23,7 @@ void newlightinfo::on_buttonBox_accepted()
     name = ui->Name->text();
     desc = ui->Desc->text();
     type = ui->TypeBox->currentIndex();
-    room = ui->RoomBox->currentIndex();
+    ID = ui->RoomBox->currentIndex();
     this->close();
 }
 
@@ -39,6 +42,6 @@ QString newlightinfo::returnDesc(){
 int newlightinfo::returnType(){
     return type;
 }
-int newlightinfo::returnRoom(){
-    return room;
+int newlightinfo::returnID(){
+    return ID;
 }

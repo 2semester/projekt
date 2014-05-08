@@ -14,7 +14,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->button_editunits->setEnabled(false);
     ui->button_controllight->setEnabled(false);
     ui->lightmanual->setEnabled(false);
-}
+
+    }
 
 MainWindow::~MainWindow()
 {
@@ -46,6 +47,7 @@ void MainWindow::on_button_editunits_clicked()
    editunits mEditunits;
    mEditunits.setModal(true);
    if(logincorrect){
+       mEditunits.giveptr(&c_enheder);//skal faa pointer til c_enheder
        mEditunits.exec();
    }
 }
@@ -56,16 +58,18 @@ void MainWindow::on_button_controllight_clicked()
     controllight mControllight;
     mControllight.setModal(true);
     if(logincorrect){
+        mControllight.giveptr(&c_enheder, &c_totalkonfiguration); //skal faa pointer til c_enheder og c_totalkonfiguration
         mControllight.exec();
     }
 }
 
 
-void MainWindow::on_lightmanual_clicked()
+void MainWindow::on_lightmanual_clicked() //skal faa pointer til c_enheder
 {
     ManualLight mManuallight;
     mManuallight.setModal(true);
     if(logincorrect){
+        mManuallight.giveptr(&c_enheder);
         mManuallight.exec();
     }
 }

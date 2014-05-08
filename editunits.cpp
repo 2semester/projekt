@@ -11,7 +11,7 @@ editunits::editunits(QWidget *parent) :
     ui->setupUi(this);
     ui->tableWidget->setRowCount(0);
     ui->tableWidget->setColumnCount(4);
-    tableHeader<<"Type"<<"Name"<<"Room"<<"Description";
+    tableHeader<<"Type"<<"Name"<<"ID"<<"Description";
     ui->tableWidget->setHorizontalHeaderLabels(tableHeader);
 }
 
@@ -29,7 +29,7 @@ void editunits::on_Add_clicked()
     mNewlightinfo.exec();
     if(mNewlightinfo.valid){
         type = mNewlightinfo.returnType();
-        room = mNewlightinfo.returnRoom();
+        ID = mNewlightinfo.returnID();
         name = mNewlightinfo.returnName();
         desc = mNewlightinfo.returnDesc();
         const int currentRow = ui->tableWidget->rowCount();
@@ -38,15 +38,7 @@ void editunits::on_Add_clicked()
             ui->tableWidget->setItem(currentRow, 0, new QTableWidgetItem("Light"));
         }
         ui->tableWidget->setItem(currentRow, 1, new QTableWidgetItem(name));
-        switch(room){
-        case -1:
-            ui->tableWidget->setItem(currentRow, 2, new QTableWidgetItem("N/A"));
-            break;
-        default:
-            ui->tableWidget->setItem(currentRow, 2, new QTableWidgetItem("N/A"));
-            break;
-        }
-
+        ui->tableWidget->setItem(currentRow, 2, new QTableWidgetItem(QString::number(ID+1)));
         ui->tableWidget->setItem(currentRow, 3, new QTableWidgetItem(desc));
     }
 }
@@ -73,4 +65,8 @@ void editunits::on_ok_clicked()
 void editunits::on_cancel_clicked()
 {
     this->close();
+}
+
+void editunits::giveptr(enheder *enhederptr){
+
 }

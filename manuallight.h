@@ -7,6 +7,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QDialogButtonBox>
+#include "enheder.h"
 
 namespace Ui {
 class ManualLight;
@@ -19,6 +20,7 @@ class ManualLight : public QDialog
 public:
     explicit ManualLight(QWidget *parent = 0);
     ~ManualLight();
+    void giveptr(enheder*);
 
 private slots:
     void ok();

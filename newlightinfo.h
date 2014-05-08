@@ -18,10 +18,10 @@ public:
     QString returnName();
     QString returnDesc();
     int returnType();
-    int returnRoom();
+    int returnID();
     bool valid;
     QString name, desc;
-    int type, room;
+    int type, ID;
 private slots:
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();

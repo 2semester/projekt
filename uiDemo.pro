@@ -19,7 +19,11 @@ SOURCES += main.cpp\
     controllight.cpp \
     manuallight.cpp \
     sure.cpp \
-    newlightinfo.cpp
+    newlightinfo.cpp \
+    konfiguration.cpp \
+    lysenhed.cpp \
+    enheder.cpp \
+    totalkonfiguration.cpp
 
 HEADERS  += mainwindow.h \
     login.h \
@@ -27,7 +31,11 @@ HEADERS  += mainwindow.h \
     controllight.h \
     manuallight.h \
     sure.h \
-    newlightinfo.h
+    newlightinfo.h \
+    konfiguration.h \
+    lysenhed.h \
+    enheder.h \
+    totalkonfiguration.h
 
 FORMS    += mainwindow.ui \
     login.ui \

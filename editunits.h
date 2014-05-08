@@ -2,6 +2,7 @@
 #define EDITUNITS_H
 
 #include <QDialog>
+#include "enheder.h"
 
 namespace Ui {
 class editunits;
@@ -14,6 +15,7 @@ class editunits : public QDialog
 public:
     explicit editunits(QWidget *parent = 0);
     ~editunits();
+    void giveptr(enheder*);
 
 private slots:
 
@@ -29,7 +31,7 @@ private slots:
 private:
     Ui::editunits *ui;
     QStringList tableHeader;
-    int type, room;
+    int type, ID;
     QString name, desc;
 };
 

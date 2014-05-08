@@ -74,3 +74,7 @@ void controllight::on_comboBox_currentIndexChanged(int LampID)
     }
 
 }
+
+void controllight::giveptr(enheder *enhedptr, totalkonfiguration *konfigptr){
+
+}

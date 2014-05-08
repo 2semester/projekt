@@ -2,6 +2,8 @@
 #define CONTROLLIGHT_H
 
 #include <QDialog>
+#include "totalkonfiguration.h"
+#include "enheder.h"
 
 namespace Ui {
 class controllight;
@@ -14,6 +16,7 @@ class controllight : public QDialog
 public:
     explicit controllight(QWidget *parent = 0);
     ~controllight();
+    void giveptr(enheder*, totalkonfiguration*);
 
 private slots:
     void on_ok_clicked();
