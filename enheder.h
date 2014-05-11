@@ -8,10 +8,11 @@ class enheder
 public:
     enheder();
     void nyenhed(lysenhed);
-    lysenhed getenhed(int);
+    lysenhed *getenhed(int);
     void fjernenhed(int);
-private:
     std::vector<lysenhed> lysenheder;
+private:
+
 };
 
 #endif // ENHEDER_H

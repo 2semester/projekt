@@ -16,7 +16,6 @@ public:
     explicit editunits(QWidget *parent = 0);
     ~editunits();
     void giveptr(enheder*);
-
 private slots:
 
 
@@ -33,6 +32,7 @@ private:
     QStringList tableHeader;
     int type, ID;
     QString name, desc;
+    enheder *ptrenheder;
 };
 
 #endif // EDITUNITS_H

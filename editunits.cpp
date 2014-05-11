@@ -2,7 +2,7 @@
 #include "ui_editunits.h"
 #include "sure.h"
 #include "newlightinfo.h"
-#include <iostream>
+
 
 editunits::editunits(QWidget *parent) :
     QDialog(parent),
@@ -12,7 +12,7 @@ editunits::editunits(QWidget *parent) :
     ui->tableWidget->setRowCount(0);
     ui->tableWidget->setColumnCount(4);
     tableHeader<<"Type"<<"Name"<<"ID"<<"Description";
-    ui->tableWidget->setHorizontalHeaderLabels(tableHeader);
+    ui->tableWidget->setHorizontalHeaderLabels(tableHeader);    
 }
 
 editunits::~editunits()
@@ -28,18 +28,25 @@ void editunits::on_Add_clicked()
     mNewlightinfo.setModal(true);
     mNewlightinfo.exec();
     if(mNewlightinfo.valid){
+        lysenhed tmplys;
         type = mNewlightinfo.returnType();
         ID = mNewlightinfo.returnID();
         name = mNewlightinfo.returnName();
         desc = mNewlightinfo.returnDesc();
-        const int currentRow = ui->tableWidget->rowCount();
-        ui->tableWidget->setRowCount(currentRow+1);
+        tmplys.settype(type);
+        tmplys.setID(ID);
+        tmplys.setname(name);
+        tmplys.setdesc(desc);
+        ptrenheder->lysenheder.push_back(tmplys);
+
+        int insertRow = ui->tableWidget->rowCount();
+        ui->tableWidget->insertRow(insertRow);
         if(type == 0){
-            ui->tableWidget->setItem(currentRow, 0, new QTableWidgetItem("Light"));
+            ui->tableWidget->setItem(insertRow, 0, new QTableWidgetItem("Light"));
         }
-        ui->tableWidget->setItem(currentRow, 1, new QTableWidgetItem(name));
-        ui->tableWidget->setItem(currentRow, 2, new QTableWidgetItem(QString::number(ID+1)));
-        ui->tableWidget->setItem(currentRow, 3, new QTableWidgetItem(desc));
+        ui->tableWidget->setItem(insertRow, 1, new QTableWidgetItem(tmplys.getname()));
+        ui->tableWidget->setItem(insertRow, 2, new QTableWidgetItem(QString::number(tmplys.getID()+1)));
+        ui->tableWidget->setItem(insertRow, 3, new QTableWidgetItem(tmplys.getdesc()));
     }
 }
 
@@ -68,5 +75,6 @@ void editunits::on_cancel_clicked()
 }
 
 void editunits::giveptr(enheder *enhederptr){
+    ptrenheder = enhederptr;
 
 }

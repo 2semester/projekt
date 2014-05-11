@@ -2,6 +2,7 @@
 
 enheder::enheder()
 {
+
 }
 
 void enheder::nyenhed(lysenhed nyenhed){
@@ -9,8 +10,8 @@ void enheder::nyenhed(lysenhed nyenhed){
     return;
 }
 
-lysenhed enheder::getenhed(int i){
-     return enheder::lysenheder.at(i);
+lysenhed *enheder::getenhed(int i){
+     return &enheder::lysenheder.at(i);
 }
 
 void enheder::fjernenhed(int i){
