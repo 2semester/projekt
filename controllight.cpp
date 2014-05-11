@@ -6,21 +6,7 @@ controllight::controllight(QWidget *parent) :
     ui(new Ui::controllight)
 {
     ui->setupUi(this);
-    ui->tableWidget->setRowCount(24);
-    ui->tableWidget->setColumnCount(7);
-    tableHeader<<"Monday"<<"Tuesday"<<"Wednesday"<<"Thursday"<<"Friday"<<"Saturday"<<"Sunday";
-    ui->tableWidget->setHorizontalHeaderLabels(tableHeader);
 
-    for(int row = 0; row < 24; row++){
-        for(int column = 0; column < 7; column++){
-            ui->tableWidget->setItem(row, column,new QTableWidgetItem);
-            ui->tableWidget->item(row,column)->setBackground(Qt::red);
-        }
-    }
-
-    ui->comboBox->addItem(tr("Test Lamp 1"));
-    ui->comboBox->addItem(tr("Test Lamp 2"));
-    ui->comboBox->addItem(tr("Test Lamp 3"));
 }
 
 controllight::~controllight()
@@ -41,40 +27,85 @@ void controllight::on_cancel_clicked()
 
 void controllight::on_on_clicked()
 {
-    QTableWidgetSelectionRange range = ui->tableWidget->selectedRanges().front();
+    konfiguration tmpkonfig = ptrkonfig->konfigurationliste.at(ui->comboBox->currentIndex());
+    if(!ui->tableWidget->selectedRanges().empty()){
+        QTableWidgetSelectionRange range = ui->tableWidget->selectedRanges().front();
+        for(int row = range.topRow(); row <= range.bottomRow(); row++){
+            for(int column = range.leftColumn(); column <= range.rightColumn(); column++){
+                tmpkonfig.setstatus(row,column,true);
 
-    for(int row = range.topRow(); row <= range.bottomRow(); row++){
-        for(int column = range.leftColumn(); column <= range.rightColumn(); column++){
-            ui->tableWidget->item(row,column)->setBackground(Qt::green);
-            ui->tableWidget->item(row,column)->setText("ON");
+            }
         }
     }
+    ptrkonfig->konfigurationliste.at(ui->comboBox->currentIndex()) = tmpkonfig;
+    redraw();
 }
 
 void controllight::on_off_clicked()
 {
-    QTableWidgetSelectionRange range = ui->tableWidget->selectedRanges()[0];
+    konfiguration tmpkonfig = ptrkonfig->konfigurationliste.at(ui->comboBox->currentIndex());
+    if(!ui->tableWidget->selectedRanges().empty()){
+        QTableWidgetSelectionRange range = ui->tableWidget->selectedRanges().front();
+        for(int row = range.topRow(); row <= range.bottomRow(); row++){
+            for(int column = range.leftColumn(); column <= range.rightColumn(); column++){
+                tmpkonfig.setstatus(row,column,false);
 
-    for(int row = range.topRow(); row <= range.bottomRow(); row++){
-        for(int column = range.leftColumn(); column <= range.rightColumn(); column++){
-            ui->tableWidget->item(row,column)->setBackground(Qt::red);
-            ui->tableWidget->item(row,column)->setText("");
+            }
         }
     }
+    ptrkonfig->konfigurationliste.at(ui->comboBox->currentIndex()) = tmpkonfig;
+    redraw();
 }
 
 void controllight::on_comboBox_currentIndexChanged(int LampID)
 {
-    //temp save other lamp config and then load new data
-    for(int row = 0; row < 24; row++){ //placeholder stuff
-        for(int column = 0; column < 7; column++){
-            ui->tableWidget->item(row,column)->setBackground(Qt::red);
-            ui->tableWidget->item(row,column)->setText("");
-        }
-    }
+    redraw();
 
 }
 
 void controllight::giveptr(enheder *enhedptr, totalkonfiguration *konfigptr){
+    ptrenheder = enhedptr;
+    ptrkonfig = konfigptr;
+}
 
+void controllight::draw(){
+    ui->tableWidget->setRowCount(24);
+    ui->tableWidget->setColumnCount(7);
+    tableHeader<<"Monday"<<"Tuesday"<<"Wednesday"<<"Thursday"<<"Friday"<<"Saturday"<<"Sunday";
+    ui->tableWidget->setHorizontalHeaderLabels(tableHeader);
+
+    for(int row = 0; row < 24; row++){
+        for(int column = 0; column < 7; column++){
+            ui->tableWidget->setItem(row, column,new QTableWidgetItem);
+            ui->tableWidget->item(row,column)->setBackground(Qt::red);
+        }
+    }
+    for(int i = 0; i < ptrenheder->lysenheder.size(); i++){
+        lysenhed tmplys = ptrenheder->lysenheder.at(i);
+        ui->comboBox->addItem(tmplys.getname());
+    }
+}
+
+void controllight::redraw(){
+
+    konfiguration tmpkonfig = ptrkonfig->konfigurationliste.at(ui->comboBox->currentIndex());
+    ui->tableWidget->setRowCount(0);
+    ui->tableWidget->setRowCount(24);
+    ui->tableWidget->setColumnCount(7);
+    tableHeader<<"Monday"<<"Tuesday"<<"Wednesday"<<"Thursday"<<"Friday"<<"Saturday"<<"Sunday";
+    ui->tableWidget->setHorizontalHeaderLabels(tableHeader);
+
+    for(int row = 0; row < 24; row++){
+        for(int column = 0; column < 7; column++){
+            ui->tableWidget->setItem(row, column,new QTableWidgetItem);
+            if(tmpkonfig.getstatus(row,column) == true){
+                ui->tableWidget->item(row,column)->setBackground(Qt::green);
+                ui->tableWidget->item(row,column)->setText("ON");
+            }
+            else{
+                ui->tableWidget->item(row,column)->setBackground(Qt::red);
+                ui->tableWidget->item(row,column)->setText("");
+            }
+        }
+    }
 }

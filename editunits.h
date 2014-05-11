@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "enheder.h"
+#include "totalkonfiguration.h"
 
 namespace Ui {
 class editunits;
@@ -15,7 +16,8 @@ class editunits : public QDialog
 public:
     explicit editunits(QWidget *parent = 0);
     ~editunits();
-    void giveptr(enheder*);
+    void giveptr(enheder*, totalkonfiguration*);
+    void redraw();
 private slots:
 
 
@@ -33,6 +35,8 @@ private:
     int type, ID;
     QString name, desc;
     enheder *ptrenheder;
+    totalkonfiguration *ptrkonfig;
+
 };
 
 #endif // EDITUNITS_H

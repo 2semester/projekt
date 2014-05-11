@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "totalkonfiguration.h"
 #include "enheder.h"
+#include "totalkonfiguration.h"
 
 namespace Ui {
 class controllight;
@@ -17,6 +18,8 @@ public:
     explicit controllight(QWidget *parent = 0);
     ~controllight();
     void giveptr(enheder*, totalkonfiguration*);
+    void redraw();
+    void draw();
 
 private slots:
     void on_ok_clicked();
@@ -32,6 +35,8 @@ private slots:
 private:
     Ui::controllight *ui;
     QStringList tableHeader;
+    enheder *ptrenheder;
+    totalkonfiguration *ptrkonfig;
 };
 
 #endif // CONTROLLIGHT_H

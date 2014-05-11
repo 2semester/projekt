@@ -11,8 +11,9 @@ public:
     void nykonfiguration(konfiguration);
     konfiguration getkonfiguration(int);
     void fjernkonfiguration(int);
-private:
     std::vector<konfiguration> konfigurationliste;
+private:
+
 };
 
 #endif // TOTALKONFIGURATION_H

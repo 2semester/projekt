@@ -6,45 +6,7 @@ ManualLight::ManualLight(QWidget *parent) :
     ui(new Ui::ManualLight)
 {
     ui->setupUi(this);
-    int lamps = 7;
-
-
-    for(int i=0; i< lamps; i++){
-       lamplabel[i] = new QLabel;
-       lamplabel[i]->setText("Lamp");
-    }
-
-    for(int i=0; i< lamps; i++){
-       label[i] = new QLabel;
-       label[i]->setText(QString::number(i));
-    }
-
-    for(int i=0; i< lamps; i++){
-       checkbox[i] = new QCheckBox;
-    }
-
-    for(int i=0; i< lamps; i++){
-       layout[i] = new QHBoxLayout;
-       layout[i]->addWidget(lamplabel[i]);
-       layout[i]->addWidget(label[i]);
-       layout[i]->addWidget(checkbox[i]);
-    }
-    QVBoxLayout *Vlayout = new QVBoxLayout;
-    for(int i = 0; i < lamps; i++){
-        Vlayout->addLayout(layout[i]);
-    }
-
-    QDialogButtonBox *button1 = new QDialogButtonBox(QDialogButtonBox::Ok);
-        connect(button1, SIGNAL(clicked(QAbstractButton*)), this, SLOT(ok()));
-    QDialogButtonBox *button2 = new QDialogButtonBox(QDialogButtonBox::Cancel);
-        connect(button2, SIGNAL(clicked(QAbstractButton*)), this, SLOT(fail()));
-    QHBoxLayout *boxlayout = new QHBoxLayout;
-    boxlayout->addWidget(button1);
-    boxlayout->addWidget(button2);
-    Vlayout->addLayout(boxlayout);
-    window()->setLayout(Vlayout);
-    window()->show();
-
+    Vlayout = new QVBoxLayout;
 }
 
 ManualLight::~ManualLight()
@@ -53,7 +15,10 @@ ManualLight::~ManualLight()
 }
 
 void ManualLight::ok(){
-    //some save and process stuff
+    for(int i = 0; i < ptrenheder->lysenheder.size(); i++){
+        lysenhed tmplys = ptrenheder->lysenheder.at(i);
+        tmplys.setstatus(checkbox[i]->isTristate());
+    }
     this->close();
 }
 
@@ -62,5 +27,37 @@ void ManualLight::fail(){
 }
 
 void ManualLight::giveptr(enheder *enhederptr){
+    ptrenheder = enhederptr;
+}
 
+void ManualLight::redraw(){
+    delete Vlayout;
+    Vlayout = new QVBoxLayout;
+    int lamps = ptrenheder->lysenheder.size();
+    for(int i = 0; i < ptrenheder->lysenheder.size(); i++){
+        label[i] = new QLabel;
+        lamplabel[i] = new QLabel;
+        lysenhed tmplys = ptrenheder->lysenheder.at(i);
+        label[i]->setText(tmplys.getname());
+        lamplabel[i]->setText((tmplys.getdesc()));
+        checkbox[i] = new QCheckBox;
+
+        layout[i] = new QHBoxLayout;
+        layout[i]->addWidget(label[i]);
+        layout[i]->addWidget(lamplabel[i]);
+        layout[i]->addWidget(checkbox[i]);
+        Vlayout->addLayout(layout[i]);
+
+    }
+
+    QHBoxLayout *boxlayout = new QHBoxLayout;
+    QDialogButtonBox *button1 = new QDialogButtonBox(QDialogButtonBox::Ok);
+        connect(button1, SIGNAL(clicked(QAbstractButton*)), this, SLOT(ok()));
+    QDialogButtonBox *button2 = new QDialogButtonBox(QDialogButtonBox::Cancel);
+        connect(button2, SIGNAL(clicked(QAbstractButton*)), this, SLOT(fail()));
+    boxlayout->addWidget(button1);
+    boxlayout->addWidget(button2);
+    Vlayout->addLayout(boxlayout);
+    window()->setLayout(Vlayout);
+    window()->show();
 }

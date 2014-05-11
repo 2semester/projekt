@@ -14,7 +14,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->button_editunits->setEnabled(false);
     ui->button_controllight->setEnabled(false);
     ui->lightmanual->setEnabled(false);
-
     }
 
 MainWindow::~MainWindow()
@@ -31,8 +30,6 @@ void MainWindow::on_button_Login_clicked()
        logincorrect = mLogin.correct();
        if(logincorrect){
            ui->button_editunits->setEnabled(true);
-           ui->button_controllight->setEnabled(true);
-           ui->lightmanual->setEnabled(true);
        }
        else{
            ui->button_editunits->setEnabled(false);
@@ -46,10 +43,18 @@ void MainWindow::on_button_editunits_clicked()
 {
    editunits mEditunits;
    mEditunits.setModal(true);
-   if(logincorrect){
-       mEditunits.giveptr(&c_enheder);//skal faa pointer til c_enheder
-       mEditunits.exec();
+   mEditunits.giveptr(&c_enheder, &c_totalkonfiguration);//skal faa pointer til c_enheder
+   mEditunits.redraw();
+   mEditunits.exec();
+
+   if(!c_totalkonfiguration.konfigurationliste.empty()){
+    ui->button_controllight->setEnabled(true);
+    ui->lightmanual->setEnabled(true);
    }
+   else{
+    ui->button_controllight->setEnabled(false);
+    ui->lightmanual->setEnabled(false);
+    }
 }
 
 
@@ -57,10 +62,9 @@ void MainWindow::on_button_controllight_clicked()
 {
     controllight mControllight;
     mControllight.setModal(true);
-    if(logincorrect){
-        mControllight.giveptr(&c_enheder, &c_totalkonfiguration); //skal faa pointer til c_enheder og c_totalkonfiguration
-        mControllight.exec();
-    }
+    mControllight.giveptr(&c_enheder, &c_totalkonfiguration); //skal faa pointer til c_enheder og c_totalkonfiguration
+    mControllight.draw();
+    mControllight.exec();
 }
 
 
@@ -68,8 +72,16 @@ void MainWindow::on_lightmanual_clicked() //skal faa pointer til c_enheder
 {
     ManualLight mManuallight;
     mManuallight.setModal(true);
-    if(logincorrect){
-        mManuallight.giveptr(&c_enheder);
-        mManuallight.exec();
-    }
+    mManuallight.giveptr(&c_enheder);
+    mManuallight.redraw();
+    mManuallight.exec();
+}
+
+void MainWindow::on_update_clicked()
+{
+    //generate strings for units
+    //generate strings for config
+    //send strings for units
+    //send strings for plans
+
 }

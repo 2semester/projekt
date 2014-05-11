@@ -21,10 +21,12 @@ public:
     explicit ManualLight(QWidget *parent = 0);
     ~ManualLight();
     void giveptr(enheder*);
+    void redraw();
 
 private slots:
     void ok();
     void fail();
+
 private:
     Ui::ManualLight *ui;
     QLabel *lamplabel[14];
@@ -32,6 +34,8 @@ private:
     QCheckBox *checkbox[14];
     QHBoxLayout *layout[14];
     QVBoxLayout *Vlayout;
+    enheder *ptrenheder;
+
 };
 
 #endif // MANUALLIGHT_H
