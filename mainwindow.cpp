@@ -14,10 +14,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->button_editunits->setEnabled(false);
     ui->button_controllight->setEnabled(false);
     ui->lightmanual->setEnabled(false);
+    timer = startTimer(1000); //kun for test senere vaer fuld time
     }
 
 MainWindow::~MainWindow()
 {
+    killTimer(timer);
     delete ui;
 }
 
@@ -84,4 +86,10 @@ void MainWindow::on_update_clicked()
     //send strings for units
     //send strings for plans
 
+}
+
+void MainWindow::timerEvent(QTimerEvent *event)
+{
+    transmit trm;
+    trm.checkcalender(&c_enheder, &c_totalkonfiguration);
 }

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "totalkonfiguration.h"
 #include "enheder.h"
+#include "transmit.h"
 
 namespace Ui {
 class MainWindow;
@@ -28,9 +29,14 @@ private slots:
 
     void on_lightmanual_clicked();
 
+    void on_update_clicked();
+
 private:
     Ui::MainWindow *ui;
     bool logincorrect;
+    int timer;
+protected:
+    void timerEvent(QTimerEvent *event);
 };
 
 #endif // MAINWINDOW_H

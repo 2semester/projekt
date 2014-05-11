@@ -7,8 +7,8 @@ class konfiguration
 {
 public:
     konfiguration();
-    bool getstatus(int, int);
-    void setstatus(int, int, bool);
+    bool getstatus(int row, int column);
+    void setstatus(int row, int column, bool status);
     QString getdesc();
     void setdesc(QString);
 private:

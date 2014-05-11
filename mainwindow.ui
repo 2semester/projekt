@@ -64,6 +64,13 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="update">
+       <property name="text">
+        <string>UPDATE CONTROLLER</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
   </widget>
