@@ -12,16 +12,17 @@ public:
     int gettype();
     int getID();
     bool getstatus();
+    bool getmanuelt();
     void setname(QString);
     void setdesc(QString);
     void settype(int);
     void setID(int);
     void setstatus(bool);
-
+    void setmanuelt(bool);
 private:
     QString name, desc;
     int type, ID;
-    bool status;
+    bool status, manuelt;
 };
 
 #endif // LYSENHED_H

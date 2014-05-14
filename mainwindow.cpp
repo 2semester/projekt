@@ -79,17 +79,9 @@ void MainWindow::on_lightmanual_clicked() //skal faa pointer til c_enheder
     mManuallight.exec();
 }
 
-void MainWindow::on_update_clicked()
-{
-    //generate strings for units
-    //generate strings for config
-    //send strings for units
-    //send strings for plans
-
-}
-
 void MainWindow::timerEvent(QTimerEvent *event)
 {
     transmit trm;
+    trm.usemanuelt(&c_enheder);
     trm.checkcalender(&c_enheder, &c_totalkonfiguration);
 }

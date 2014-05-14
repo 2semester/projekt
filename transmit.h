@@ -6,15 +6,17 @@
 #include "enheder.h"
 #include "totalkonfiguration.h"
 #include <QDebug>
+#include "Serial.h"
 
 class transmit
 {
 public:
     transmit();
-    void changelamp(bool, int, bool);
-    int checkcalender(enheder*, totalkonfiguration*);
+    void checkcalender(enheder*, totalkonfiguration*);
+    void usemanuelt(enheder*);
 
 private:
+    bool changelamp(bool, int, bool, bool);
 
 QDate date;
 

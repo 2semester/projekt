@@ -29,8 +29,6 @@ private slots:
 
     void on_lightmanual_clicked();
 
-    void on_update_clicked();
-
 private:
     Ui::MainWindow *ui;
     bool logincorrect;

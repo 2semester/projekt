@@ -47,3 +47,12 @@ void lysenhed::setstatus(bool newstatus){
     lysenhed::status = newstatus;
     return;
 }
+
+void lysenhed::setmanuelt(bool newmanuelt){
+    lysenhed::manuelt = newmanuelt;
+    return;
+}
+
+bool lysenhed::getmanuelt(){
+    return lysenhed::manuelt;
+}

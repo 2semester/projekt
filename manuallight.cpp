@@ -17,7 +17,8 @@ ManualLight::~ManualLight()
 void ManualLight::ok(){
     for(int i = 0; i < ptrenheder->lysenheder.size(); i++){
         lysenhed tmplys = ptrenheder->lysenheder.at(i);
-        tmplys.setstatus(checkbox[i]->isTristate());
+        tmplys.setmanuelt(checkbox[i]->isChecked());
+        ptrenheder->lysenheder.at(i) = tmplys;
     }
     this->close();
 }
@@ -41,6 +42,7 @@ void ManualLight::redraw(){
         label[i]->setText(tmplys.getname());
         lamplabel[i]->setText((tmplys.getdesc()));
         checkbox[i] = new QCheckBox;
+        checkbox[i]->setChecked(tmplys.getmanuelt());
 
         layout[i] = new QHBoxLayout;
         layout[i]->addWidget(label[i]);

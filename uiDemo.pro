@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     lysenhed.cpp \
     enheder.cpp \
     totalkonfiguration.cpp \
-    transmit.cpp
+    transmit.cpp \
+    Serial.cpp
 
 HEADERS  += mainwindow.h \
     login.h \
@@ -37,7 +38,8 @@ HEADERS  += mainwindow.h \
     lysenhed.h \
     enheder.h \
     totalkonfiguration.h \
-    transmit.h
+    transmit.h \
+    Serial.h
 
 FORMS    += mainwindow.ui \
     login.ui \

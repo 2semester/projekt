@@ -2,10 +2,12 @@
 
 transmit::transmit()
 {
+
 }
 
-void transmit::changelamp(bool flag, int id, bool status){
+bool transmit::changelamp(bool flag, int id, bool status, bool oldstatus){
     char* buffer = new char[4];
+    bool tmp;
 
     if(flag){
         buffer[0] = '?';
@@ -61,46 +63,88 @@ void transmit::changelamp(bool flag, int id, bool status){
         case 15:
             buffer[1] = 'f';
                     break;
-       default:
-            qDebug() << "fuck 1";
-
-
+        default:
+            break;
         }
     }
-    if(status){
-        buffer[2] = 'f';
+    if(status == oldstatus){
+        tmp = false;
+        return tmp;
+
     }
-    else{
+    if(status && status != oldstatus){
+        buffer[2] = 'f';
+        tmp = true;
+    }
+    if(!status && status != oldstatus){
         buffer[2] = '0';
+        tmp = true;
     }
     buffer[3] = char(13);
 
+    if(true){
+        CSerial* serial = new CSerial();
 
-    //send shit
+        if(!serial->Open(2, 9600))
+        {
+            qDebug() << "Could not open COM";
+        }
+        else{
+            serial->SendData(buffer, 4);
+
+            serial->Close();
+        }
+        delete serial;
+    }
+
     qDebug() << buffer[0];
     qDebug() << buffer[1];
     qDebug() << buffer[2];
     qDebug() << buffer[3];
-    return;
+    return tmp;
 }
 
-int transmit::checkcalender(enheder *ptrenheder,totalkonfiguration *ptrkonfig){ //funktionen skal startes 1 gang per time
+void transmit::checkcalender(enheder *ptrenheder,totalkonfiguration *ptrkonfig){ //funktionen skal startes 1 gang per time
     date = QDate::currentDate();
+    bool nystatus;
     for(int i = 0; i < ptrkonfig->konfigurationliste.size(); i++){
         konfiguration tmpkonfig = ptrkonfig->konfigurationliste.at(i);
         time_t now = time(0);
         tm *ltm = localtime(&now);
         if(tmpkonfig.getstatus(ltm->tm_hour-1, date.dayOfWeek()-1)){
             lysenhed tmplys = ptrenheder->lysenheder.at(i);
-            changelamp(true,tmplys.getID(),true);
-            return 42;
+            if(!tmplys.getmanuelt()){
+                nystatus = changelamp(true,tmplys.getID(),true, tmplys.getstatus());
+                if(nystatus){
+                    tmplys.setstatus(true);
+                    ptrenheder->lysenheder.at(i) = tmplys;
+                }
+            }
         }
         else{
-            return 2;
+            lysenhed tmplys = ptrenheder->lysenheder.at(i);
+            if(!tmplys.getmanuelt()){
+                nystatus = changelamp(true,tmplys.getID(),false, tmplys.getstatus());
+                if(nystatus){
+                    tmplys.setstatus(false);
+                    ptrenheder->lysenheder.at(i) = tmplys;
+                }
+            }
         }
 
     }
-
-    return 3;
-
 }
+
+void transmit::usemanuelt(enheder* ptrenheder){
+    for(int i = 0; i < ptrenheder->lysenheder.size(); i++){
+
+        lysenhed tmplys = ptrenheder->lysenheder.at(i);
+        if(tmplys.getmanuelt()){
+            changelamp(false, tmplys.getID(), true, tmplys.getstatus());
+            tmplys.setstatus(true);
+            ptrenheder->lysenheder.at(i) = tmplys;
+        }
+    }
+}
+
+

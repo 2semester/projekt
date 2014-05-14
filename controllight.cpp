@@ -19,12 +19,6 @@ void controllight::on_ok_clicked()
     this->close();
 }
 
-void controllight::on_cancel_clicked()
-{
-    this->close();
-}
-
-
 void controllight::on_on_clicked()
 {
     konfiguration tmpkonfig = ptrkonfig->konfigurationliste.at(ui->comboBox->currentIndex());
